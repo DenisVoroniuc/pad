@@ -38,3 +38,10 @@
     - Accept (Post) 
     - Decline (Post)
 ## **List of Technologies :**
+    - GRPC
+    - node
+    - Docker
+    - ruby
+    - redis
+    - postgreSQL
+    
