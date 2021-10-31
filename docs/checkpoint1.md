@@ -47,6 +47,6 @@
     
 ## **Service Diagram :**
     
-    ![image](https://user-images.githubusercontent.com/56674975/139598142-e8df007d-0567-432c-a68b-34a554684414.png)
+   ![image](/ServiceDiagram.png)
 
     
