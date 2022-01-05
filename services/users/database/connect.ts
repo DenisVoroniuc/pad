@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { defaultConfig } from "../config/defaults";
-import { log } from "../logger";
+import { defaultConfig } from "../../common/users.config";
+import { log } from "../../common/logger";
 
 export const connect = () => {
   const { dbUrl } = defaultConfig;
@@ -8,7 +8,7 @@ export const connect = () => {
   return mongoose
     .connect(dbUrl)
     .then(() => {
-      log.info("Database connected");
+      log.info("Users database connected");
     })
     .catch(error => {
       log.error("db error", error);

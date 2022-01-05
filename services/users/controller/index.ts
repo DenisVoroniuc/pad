@@ -1,7 +1,7 @@
-import { request, Request, Response } from "express";
+import { Request, Response } from "express";
 import { createUser, editUser, findUser, getUsers, deleteUser } from "../service";
-import { omit, get } from "lodash";
-import { log } from "../logger";
+import { omit } from "lodash";
+import { log } from "../../common/logger";
 
 export const createUserHandler = async (request: Request, response: Response) => {
   try {

@@ -6,31 +6,35 @@
   "scripts": {
     "tsc": "tsc -p tsconfig-check.json",
     "prettier:write": "prettier --config .prettierrc --write \"**/*.*\"",
-    "start:users": "nodemon --config nodemon.json services/users/app.ts"
+    "start:gateway": "nodemon --config nodemon.json services/gateway/app.ts",
+    "start:users": "nodemon --config nodemon.json services/users/app.ts",
+    "dev": "concurrently \"npm run start:gateway\" \"npm run start:users\""
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/google-protobuf": "^3.15.5",
     "@types/lodash": "^4.14.178",
     "@types/yup": "^0.29.13",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
+    "concurrently": "^7.0.0",
+    "cors": "^2.8.5",
     "dayjs": "^1.10.7",
     "express": "^4.17.1",
-    "grpc-tools": "^1.11.2",
-    "grpc_tools_node_protoc_ts": "^5.3.2",
     "lodash": "^4.17.21",
     "mongoose": "^6.1.2",
     "nodemon": "^2.0.15",
     "pino": "^7.5.1",
     "pino-pretty": "^7.3.0",
     "prettier": "^2.5.1",
+    "redis": "^4.0.1",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3",
-    "yup": "^0.32.11",
-    "grpc": "^1.24.11"
+    "yup": "^0.32.11"
   },
   "dependencies": {}
 }

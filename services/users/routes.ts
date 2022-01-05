@@ -6,9 +6,9 @@ import { createUserSchema, editUserSchema } from "./schema";
 export const routes = (app: Express) => {
   /**
    *  HealthCheck
-   *  /healthcheck
+   *  /users/healthcheck
    */
-  app.get("/healthcheck", (request: Request, response: Response) => response.sendStatus(200));
+  app.get("/users/healthcheck", (request: Request, response: Response) => response.sendStatus(200));
   /**
    *  Create user
    *  /users/create
@@ -22,10 +22,10 @@ export const routes = (app: Express) => {
   app.put("/users/edit/:userId", validateRequest(editUserSchema), editUserHandler);
 
   /**
-   *  Get users history
-   *  /users/history
+   *  Get users
+   *  /users
    */
-  app.get("/users", getUsersHandler);
+  app.get("/users/get", getUsersHandler);
 
   /**
    *  Delete user

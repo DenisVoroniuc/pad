@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 import { compare, genSalt, hashSync } from "bcrypt";
-import { defaultConfig } from "../config/defaults";
+import { defaultConfig } from "../../common/users.config";
 
 export interface UserDocument extends Document {
   email: string;
