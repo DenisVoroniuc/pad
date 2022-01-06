@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import { createUserHandler, editUserHandler, getUsersHandler, deleteUserHandler } from "./controller";
-import { validateRequest } from "./middleware/validateRequest";
+import { validateRequest } from "../common/middleware/validateRequest";
 import { createUserSchema, editUserSchema } from "./schema";
 
 export const routes = (app: Express) => {

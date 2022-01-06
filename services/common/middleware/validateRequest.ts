@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { AnySchema } from "yup";
-import { log } from "../../common/logger";
+import { log } from "../logger";
 
 export const validateRequest =
   (schema: AnySchema) => async (request: Request, response: Response, next: NextFunction) => {
@@ -12,7 +12,7 @@ export const validateRequest =
       });
       return next();
     } catch (error) {
-      log.error(error);
-      return response.status(400).send(error);
+      log.error((error as { message: string }).message);
+      return response.status(400).send((error as { message: string }).message);
     }
   };

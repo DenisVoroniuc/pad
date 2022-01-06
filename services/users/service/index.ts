@@ -11,7 +11,7 @@ export const createUser = async (
   try {
     return await User.create(data);
   } catch (error) {
-    throw new Error(error as string);
+    throw new Error((error as { message: string }).message);
   }
 };
 

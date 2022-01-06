@@ -1,7 +1,7 @@
 import { Express, Request, Response } from "express";
 import { log } from "../common/logger";
 import axios, { AxiosRequestHeaders, Method } from "axios";
-import servicesConfig from "../common/services.config.json";
+import registry from "../common/registry.json";
 
 export const routes = (app: Express) => {
   /**
@@ -11,12 +11,12 @@ export const routes = (app: Express) => {
   app.get("/healthcheck", (request: Request, response: Response) => response.sendStatus(200));
 
   app.all("/:serviceName/:path", (request: Request, response: Response) => {
-    if (servicesConfig.services.hasOwnProperty(request.params.serviceName)) {
-      //here i ignore ts error cause in the previous check I found that object `servicesConfig.services` has `request.params.serviceName` property
+    // log.warn(request.params);
+    if (registry.services.hasOwnProperty(request.params.serviceName)) {
+      //here i ignore ts error cause in the previous check I found that object `registry.services` has `request.params.serviceName` property
       //@ts-expect-error
-      const url = (servicesConfig.services[request.params.serviceName as string].url +
-        "/" +
-        request.params.path) as string;
+      const url = (registry.services[request.params.serviceName as string].url + "/" + request.params.path) as string;
+      log.warn(request.method);
       axios(url, {
         method: request.method as Method,
         headers: request.headers as AxiosRequestHeaders,
@@ -25,7 +25,9 @@ export const routes = (app: Express) => {
         .then(r => {
           response.send(r.data);
         })
-        .catch(r => response.send(r.data));
+        .catch(r => {
+          response.send(r.data);
+        });
     } else {
       response.send(404);
     }
