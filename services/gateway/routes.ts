@@ -17,6 +17,8 @@ export const routes = (app: Express) => {
       //@ts-expect-error
       const url = (registry.services[request.params.serviceName as string].url + "/" + request.params.path) as string;
       log.warn(request.method);
+      log.warn(url);
+
       axios(url, {
         method: request.method as Method,
         headers: request.headers as AxiosRequestHeaders,

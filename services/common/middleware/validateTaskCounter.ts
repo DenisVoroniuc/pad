@@ -29,7 +29,6 @@ export const createTaskManager = (maximumTaskCounter = 5) => ({
 
 export const validateTaskCounter =
   (taskManager: TaskManager) => async (request: Request, response: Response, next: NextFunction) => {
-    log.info(taskManager);
     // return 429 if taskCounterLimit is reached
     if (taskManager.checkMaximumTaskCounter()) {
       return response.status(429).send("Too many requests");
