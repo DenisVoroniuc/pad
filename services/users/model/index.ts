@@ -2,12 +2,18 @@ import { Schema, model, Document } from "mongoose";
 import { compare, genSalt, hashSync } from "bcrypt";
 import { defaultConfig } from "../../common/users.config";
 
+export enum UserType {
+  Client = "client",
+  Driver = "driver",
+}
+
 export interface UserDocument extends Document {
   email: string;
   name: string;
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  userType: UserType;
   comparePassword: (password: string) => Promise<boolean>;
 }
 
@@ -16,6 +22,7 @@ const UserSchema = new Schema(
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     password: { type: String, required: true },
+    userType: { type: String, required: true, default: () => UserType.Client },
   },
   { timestamps: true },
 );

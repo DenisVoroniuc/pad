@@ -6,6 +6,7 @@ export enum Status {
   InProgress = "InProgress",
   Done = "Done",
 }
+
 export interface OrderDocument extends Document {
   userId: string;
   startingPoint: string;

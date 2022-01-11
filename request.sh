@@ -1,5 +1,8 @@
-curl -X POST 'http://localhost:3001/orders/create' -H "Content-Type: application/json" \
+curl -X POST 'http://localhost:5000/users/create' -H "Content-Type: application/json" \
     -d '{
-        "startingPoint":"startingPoint",
-        "destinationPoint":"destinationPoint"
+        "email":"4@email.com",
+        "name":"name",
+        "password":"password",
+        "passwordConfirmation":"password",
+        "userType":"client"
     }' \

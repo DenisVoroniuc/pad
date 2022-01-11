@@ -39,5 +39,5 @@ export const routes = (app: Express) => {
    * Delete Order
    * /orders/delete/:orderId
    */
-  app.get("/orders/delete/:orderId", deleteOrderHandler);
+  app.delete("/orders/delete/:orderId", deleteOrderHandler);
 };
