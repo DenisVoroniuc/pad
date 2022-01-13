@@ -1,5 +1,4 @@
 export const defaultConfig = {
-  port: 5000,
+  port: 5001,
   host: "localhost",
-  SALT_WORK_FACTOR: 15,
 };

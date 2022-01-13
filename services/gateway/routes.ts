@@ -1,9 +1,12 @@
 import { Express, Request, Response } from "express";
+import axios from "axios";
+import { registry } from "../common/registry";
 import { log } from "../common/logger";
-import axios, { AxiosRequestHeaders, Method } from "axios";
-import registry from "../common/registry.json";
+import { RedisClient } from "./app";
 
-export const routes = (app: Express) => {
+const defaultExpiration = 3600;
+
+export const routes = (app: Express, redisClient: RedisClient) => {
   /**
    *  HealthCheck
    *  /healthcheck
@@ -16,14 +19,12 @@ export const routes = (app: Express) => {
   /**
    * gateway logic
    */
-  app.all("/:serviceName/:path", (request: Request, response: Response, next) => {
+  app.all("/:serviceName/:path", async (request: Request, response: Response, next) => {
     if (registry.services.hasOwnProperty(request.params.serviceName)) {
       //here i ignore ts error cause in the previous check I found that object `registry.services` has `request.params.serviceName` property
       //@ts-expect-error
       const url = (registry.services[request.params.serviceName as string].url + "/" + request.params.path) as string;
-      log.warn(request.method);
-      log.warn(request.body);
-      log.warn(request.headers);
+
       switch (request.method) {
         case "POST":
         case "post":
@@ -31,7 +32,21 @@ export const routes = (app: Express) => {
           break;
         case "GET":
         case "get":
-          axios.get(url).then(r => response.send(r.data));
+          {
+            const redisData = await redisClient.get(request.params.serviceName);
+
+            if (redisData !== null) {
+              log.info("got from redis")
+              return response.send(JSON.parse(redisData));
+            } else {
+              
+              axios.get(url).then(r => {
+                redisClient.setEx(request.params.serviceName, defaultExpiration, JSON.stringify(r.data));
+                log.info("got from server")
+                return response.send(r.data);
+              });
+            }
+          }
           break;
         case "DELETE":
         case "delete":
@@ -42,17 +57,6 @@ export const routes = (app: Express) => {
           axios.put(url, request.body).then(r => response.send(r.data));
           break;
       }
-      //  axios(url, {
-      //   method: request.method.toLocaleLowerCase() as Method,
-      //   headers: request.headers as AxiosRequestHeaders,
-      //   data: request.body ,
-      // })
-      //   .then(r => {
-      //     response.send(r.data);
-      //   })
-      //   .catch(r => {
-      //     response.send(r.data);
-      //   });
     } else {
       return response.send(404);
     }
