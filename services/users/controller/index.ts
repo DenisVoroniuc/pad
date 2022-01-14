@@ -4,7 +4,6 @@ import { omit } from "lodash";
 import { log } from "../../common/logger";
 
 export const createUserHandler = async (request: Request, response: Response) => {
-  log.warn(request.body);
   try {
     const user = await createUser(request.body);
     return response.send(omit(user.toJSON(), "password"));
